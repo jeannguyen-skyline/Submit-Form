@@ -1,5 +1,2 @@
 Vì lý do Airtable được lưu 1 Tháng là 1 Base khác nhau.
-
 Mỗi Tháng vào trang này lấy Link Submit Form 1 lần vào ngày đầu tháng.
-
-Test thay đổi.
