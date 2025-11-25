@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sale Order Form</title>
+  <style>
+    body { margin:0; padding:0; font-family:Arial,sans-serif; background:#d9f0ff; display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; }
+    h1 { font-size:3rem; color:#003b66; margin-bottom:20px; }
+    .box { background:white; padding:25px 30px; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.1); text-align:center; max-width:480px; width:100%; }
+    select, button { width:100%; padding:12px; margin-top:10px; border-radius:8px; border:1px solid #bbb; font-size:16px; outline:none; box-sizing:border-box; }
+    button { background-color:#4a73ff; color:white; border:none; cursor:pointer; font-weight:700; }
+    button:hover { opacity:0.85; }
+    .notice-box { margin-top:20px; padding:14px; border-radius:10px; background:#f4f4f4; border-left:4px solid #4a73ff; }
+    .notice-box textarea { width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; resize:vertical; min-height:90px; font-size:14px; box-sizing:border-box; line-height:1.4; }
+  </style>
+</head>
+<body>
+  <h1>Sale Order Form</h1>
+
+  <div class="box">
+    <p>Chọn tên rồi Click GO:</p>
+    <select id="nameSelect">
+      <option value="">-- Chọn nhân viên --</option>
+    </select>
+
+    <button onclick="goPage()">GO</button>
+
+    <div class="notice-box">
+      <textarea id="notice" placeholder="Loading..."></textarea>
+    </div>
+  </div>
+
+  <script>
+    let pages = {};
+
+    // Load pages.json
+    fetch('pages.json')
+      .then(res => res.json())
+      .then(data => {
+        pages = data;
+        const select = document.getElementById('nameSelect');
+        Object.keys(pages).forEach(name => {
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name.charAt(0).toUpperCase() + name.slice(1);
+          select.appendChild(opt);
+        });
+      })
+      .catch(err => console.error('Không load được pages.json', err));
+
+    // Load notice.txt
+    fetch('notice.txt')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('notice').value = data;
+      })
+      .catch(err => console.error('Không load được notice.txt', err));
+
+    function goPage() {
+      const val = document.getElementById('nameSelect').value;
+      if(!val) { alert("Hãy chọn tên trước nha!"); return; }
+      if(!pages[val]) { alert("Link chưa có cho nhân viên này!"); return; }
+      window.open(pages[val], "_blank");
+    }
+  </script>
+</body>
+</html>
