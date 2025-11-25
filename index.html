@@ -34,7 +34,7 @@
     let pages = {};
 
     // Load pages.json
-    fetch('pages.json')
+    fetch('pages.json?v=' + new Date().getTime())
       .then(res => res.json())
       .then(data => {
         pages = data;
@@ -49,7 +49,7 @@
       .catch(err => console.error('Không load được pages.json', err));
 
     // Load notice.txt
-    fetch('notice.txt')
+    fetch('notice.txt?v=' + new Date().getTime())
       .then(res => res.text())
       .then(data => {
         document.getElementById('notice').value = data;
@@ -65,3 +65,4 @@
   </script>
 </body>
 </html>
+
